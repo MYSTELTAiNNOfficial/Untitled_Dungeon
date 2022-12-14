@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Reference:
+ * https://www.youtube.com/watch?v=ZBj3LBA2vUY
+ * 
+ */
+
 public class CameraController : MonoBehaviour
 {
     private Vector3 offset = new Vector3(0f, 0f, -10f);
     private float smoothTime = 0.30f;
     private Vector3 velocity = Vector3.zero;
 
-    [SerializeField] private Transform target;
-    [SerializeField] private Vector3 min, max;
+    public Transform target;
+    public Vector3 min,max;
 
     // Start is called before the first frame update
     void Start()
