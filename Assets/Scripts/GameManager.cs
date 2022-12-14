@@ -19,9 +19,6 @@ public class GameManager : MonoBehaviour
     private int score = 0;
 
     private float move;
-    private float jump;
-    private float cast;
-    private float melee;
 
     // Start is called before the first frame update
     void Start()
@@ -90,9 +87,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         move = Input.GetAxisRaw("Horizontal");
-        jump = Input.GetAxisRaw("Jump");
-        cast = Input.GetAxisRaw("Cast");
-        melee = Input.GetAxisRaw("Melee");
 
         if (tutorial.active || PlayerPrefs.GetString("tutorial_done") != "true")
         {
@@ -109,12 +103,12 @@ public class GameManager : MonoBehaviour
         {
             playerController.Move(move);
 
-            if (jump == 1)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                playerController.Jump(jump);
+                playerController.Jump(1);
             }
 
-            if (cast == 1)
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 playerController.Cast();
             }

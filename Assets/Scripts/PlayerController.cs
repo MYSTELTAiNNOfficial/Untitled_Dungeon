@@ -116,9 +116,11 @@ public class PlayerController : MonoBehaviour
 
     public void StartSpawn()
     {
+
         Vector3 start = startPoint.transform.position;
         Vector3 pos = rb2d.transform.position;
-        pos = start;
+        pos.x = PlayerPrefs.GetFloat("playerPosX", start.x);
+        pos.y = PlayerPrefs.GetFloat("playerPosY", start.y);
         rb2d.transform.position = pos;
     }
 
