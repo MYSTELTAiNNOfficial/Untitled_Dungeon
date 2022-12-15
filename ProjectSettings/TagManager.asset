@@ -3,12 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Enemy
+  - Collectible
+  - Checkpoint
+  - Spell
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
@@ -50,9 +55,9 @@ TagManager:
   - name: Stage
     uniqueID: 3046616373
     locked: 0
-  - name: Player
-    uniqueID: 3430327781
-    locked: 0
   - name: Foreground
     uniqueID: 3699772221
+    locked: 0
+  - name: Player
+    uniqueID: 3430327781
     locked: 0
