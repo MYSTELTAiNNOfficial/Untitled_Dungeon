@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 140
+  controlID: 47
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 92
+  controlID: 48
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 93
+  controlID: 49
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 104
+  controlID: 60
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
-  progressMessageClearTime: 61434.2862216
+  progressMessageClearTime: -1
   notificationClearTime: -1
   timeSinceLastRotation: -1
   currentBranchAndRemoteHasUpdate: 0
@@ -411,15 +411,35 @@ MonoBehaviour:
         isActive: 0
         treeIsCheckable: 0
         checkState: 0
-      selectedNode:
-        path: Local branches
-        label: Local branches
-        level: 0
-        isFolder: 1
+      - path: master
+        label: master
+        level: 1
+        isFolder: 0
         isContainer: 0
         isCollapsed: 0
         isHidden: 0
         isActive: 0
+        treeIsCheckable: 0
+        checkState: 0
+      - path: kroci126
+        label: kroci126
+        level: 1
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 1
+        treeIsCheckable: 0
+        checkState: 0
+      selectedNode:
+        path: kroci126
+        label: kroci126
+        level: 1
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 1
         treeIsCheckable: 0
         checkState: 0
     treeRemotes:
@@ -427,10 +447,21 @@ MonoBehaviour:
       folders:
         keys:
         - Remote branches
+        - origin
         values:
         - path: Remote branches
           label: Remote branches
           level: 0
+          isFolder: 1
+          isContainer: 0
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 0
+          checkState: 0
+        - path: origin
+          label: origin
+          level: 1
           isFolder: 1
           isContainer: 0
           isCollapsed: 0
@@ -457,6 +488,56 @@ MonoBehaviour:
         isActive: 0
         treeIsCheckable: 0
         checkState: 0
+      - path: origin
+        label: origin
+        level: 1
+        isFolder: 1
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 0
+        checkState: 0
+      - path: origin/HEAD
+        label: HEAD
+        level: 2
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 0
+        checkState: 0
+      - path: origin/kroci126
+        label: kroci126
+        level: 2
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 0
+        checkState: 0
+      - path: origin/master
+        label: master
+        level: 2
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 0
+        checkState: 0
+      - path: origin/mysteltainn
+        label: mysteltainn
+        level: 2
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 0
+        checkState: 0
       selectedNode:
         path: 
         label: 
@@ -472,12 +553,12 @@ MonoBehaviour:
     newBranchName: 
     scroll: {x: 0, y: 0}
     disableDelete: 1
-    disableCreate: 1
+    disableCreate: 0
     lastLocalAndRemoteBranchListChangedEvent:
-      updatedTimeString: 0001-01-01T00:00:00.000+00:00
+      updatedTimeString: 2022-12-20T20:14:57.043+07:00
       cacheType: 2
     lastCurrentBranchAndRemoteChange:
-      updatedTimeString: 2022-12-15T08:22:33.077+07:00
+      updatedTimeString: 0001-01-01T00:00:00.000+00:00
       cacheType: 1
     currentBranch:
       name: kroci126
@@ -490,14 +571,26 @@ MonoBehaviour:
       host: 
       function: 0
       token: 
-    localBranches: []
-    remoteBranches: []
+    localBranches:
+    - name: master
+      tracking: origin/master
+    - name: kroci126
+      tracking: origin/kroci126
+    remoteBranches:
+    - name: origin/HEAD
+      tracking: '[None]'
+    - name: origin/kroci126
+      tracking: '[None]'
+    - name: origin/master
+      tracking: '[None]'
+    - name: origin/mysteltainn
+      tracking: '[None]'
   changesView:
     currentBranchHasUpdate: 0
     currentStatusEntriesHasUpdate: 0
     currentLocksHasUpdate: 0
-    commitBody: 
-    commitMessage: 
+    commitBody: stage 1 progress, stage 3 (boss) sketch
+    commitMessage: stage 1 & stage 3
     currentBranch: kroci126
     treeScroll: {x: 0, y: 0}
     treeChanges:
@@ -506,6 +599,7 @@ MonoBehaviour:
         - 00000000000000001000000000000000
         - 131a6b21c8605f84396be9f6751fb6e3
         - 2cda990e2423bbf4892e6590ba056729
+        - 2c972e7a26d860f49ab8387692526e75
         values:
         - path: Assets
           label: Assets
@@ -516,7 +610,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: 
@@ -534,7 +628,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: 
@@ -552,7 +646,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: Assets\Scenes\Stage1.unity
@@ -561,6 +655,24 @@ MonoBehaviour:
             originalPath: 
             indexStatus: 0
             workTreeStatus: 3
+        - path: Assets\Scenes\Stage3.unity
+          label: Stage3.unity
+          level: 2
+          isFolder: 0
+          isContainer: 1
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 1
+          checkState: 1
+          isLocked: 0
+          gitStatusEntry:
+            path: Assets\Scenes\Stage3.unity
+            fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity
+            projectPath: Assets\Scenes\Stage3.unity
+            originalPath: 
+            indexStatus: 1
+            workTreeStatus: 1
       folders:
         keys:
         - Assets
@@ -577,7 +689,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: 
@@ -595,7 +707,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: 
@@ -613,7 +725,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: 
@@ -631,7 +743,7 @@ MonoBehaviour:
           isHidden: 0
           isActive: 0
           treeIsCheckable: 1
-          checkState: 0
+          checkState: 1
           isLocked: 0
           gitStatusEntry:
             path: 
@@ -641,8 +753,103 @@ MonoBehaviour:
             indexStatus: 0
             workTreeStatus: 0
       checkedFileNodes:
-        keys: []
-        values: []
+        keys:
+        - Assets\Scenes\Stage1.unity
+        - Assets\Scenes\Stage3.unity
+        - Assets\Scenes\Stage3.unity.meta
+        - UserSettings\EditorUserSettings.asset
+        - UserSettings\Layouts\default-2021.dwlt
+        values:
+        - path: Assets\Scenes\Stage1.unity
+          label: Stage1.unity
+          level: 2
+          isFolder: 0
+          isContainer: 0
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 1
+          checkState: 1
+          isLocked: 0
+          gitStatusEntry:
+            path: Assets\Scenes\Stage1.unity
+            fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage1.unity
+            projectPath: Assets\Scenes\Stage1.unity
+            originalPath: 
+            indexStatus: 0
+            workTreeStatus: 3
+        - path: Assets\Scenes\Stage3.unity
+          label: Stage3.unity
+          level: 2
+          isFolder: 0
+          isContainer: 1
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 1
+          checkState: 1
+          isLocked: 0
+          gitStatusEntry:
+            path: Assets\Scenes\Stage3.unity
+            fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity
+            projectPath: Assets\Scenes\Stage3.unity
+            originalPath: 
+            indexStatus: 1
+            workTreeStatus: 1
+        - path: Assets\Scenes\Stage3.unity.meta
+          label: Stage3.unity.meta
+          level: 3
+          isFolder: 0
+          isContainer: 0
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 1
+          checkState: 1
+          isLocked: 0
+          gitStatusEntry:
+            path: Assets\Scenes\Stage3.unity.meta
+            fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity.meta
+            projectPath: Assets\Scenes\Stage3.unity.meta
+            originalPath: 
+            indexStatus: 1
+            workTreeStatus: 1
+        - path: UserSettings\EditorUserSettings.asset
+          label: EditorUserSettings.asset
+          level: 1
+          isFolder: 0
+          isContainer: 0
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 1
+          checkState: 1
+          isLocked: 0
+          gitStatusEntry:
+            path: UserSettings\EditorUserSettings.asset
+            fullPath: D:\Gavin\GameDev\Untitled_Dungeon\UserSettings\EditorUserSettings.asset
+            projectPath: UserSettings\EditorUserSettings.asset
+            originalPath: 
+            indexStatus: 0
+            workTreeStatus: 3
+        - path: UserSettings\Layouts\default-2021.dwlt
+          label: default-2021.dwlt
+          level: 2
+          isFolder: 0
+          isContainer: 0
+          isCollapsed: 0
+          isHidden: 0
+          isActive: 0
+          treeIsCheckable: 1
+          checkState: 1
+          isLocked: 0
+          gitStatusEntry:
+            path: UserSettings\Layouts\default-2021.dwlt
+            fullPath: D:\Gavin\GameDev\Untitled_Dungeon\UserSettings\Layouts\default-2021.dwlt
+            projectPath: UserSettings\Layouts\default-2021.dwlt
+            originalPath: 
+            indexStatus: 0
+            workTreeStatus: 3
       title: 
       pathSeparator: \
       displayRootNode: 0
@@ -659,7 +866,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: 
@@ -677,7 +884,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: 
@@ -695,7 +902,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: 
@@ -713,7 +920,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: Assets\Scenes\Stage1.unity
@@ -722,6 +929,42 @@ MonoBehaviour:
           originalPath: 
           indexStatus: 0
           workTreeStatus: 3
+      - path: Assets\Scenes\Stage3.unity
+        label: Stage3.unity
+        level: 2
+        isFolder: 0
+        isContainer: 1
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 1
+        checkState: 1
+        isLocked: 0
+        gitStatusEntry:
+          path: Assets\Scenes\Stage3.unity
+          fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity
+          projectPath: Assets\Scenes\Stage3.unity
+          originalPath: 
+          indexStatus: 1
+          workTreeStatus: 1
+      - path: Assets\Scenes\Stage3.unity.meta
+        label: Stage3.unity.meta
+        level: 3
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 1
+        checkState: 1
+        isLocked: 0
+        gitStatusEntry:
+          path: Assets\Scenes\Stage3.unity.meta
+          fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity.meta
+          projectPath: Assets\Scenes\Stage3.unity.meta
+          originalPath: 
+          indexStatus: 1
+          workTreeStatus: 1
       - path: UserSettings
         label: UserSettings
         level: 0
@@ -731,7 +974,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: 
@@ -749,7 +992,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: UserSettings\EditorUserSettings.asset
@@ -767,7 +1010,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: 
@@ -785,7 +1028,7 @@ MonoBehaviour:
         isHidden: 0
         isActive: 0
         treeIsCheckable: 1
-        checkState: 0
+        checkState: 1
         isLocked: 0
         gitStatusEntry:
           path: UserSettings\Layouts\default-2021.dwlt
@@ -820,6 +1063,18 @@ MonoBehaviour:
       originalPath: 
       indexStatus: 0
       workTreeStatus: 3
+    - path: Assets\Scenes\Stage3.unity
+      fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity
+      projectPath: Assets\Scenes\Stage3.unity
+      originalPath: 
+      indexStatus: 1
+      workTreeStatus: 1
+    - path: Assets\Scenes\Stage3.unity.meta
+      fullPath: D:\Gavin\GameDev\Untitled_Dungeon\Assets\Scenes\Stage3.unity.meta
+      projectPath: Assets\Scenes\Stage3.unity.meta
+      originalPath: 
+      indexStatus: 1
+      workTreeStatus: 1
     - path: UserSettings\EditorUserSettings.asset
       fullPath: D:\Gavin\GameDev\Untitled_Dungeon\UserSettings\EditorUserSettings.asset
       projectPath: UserSettings\EditorUserSettings.asset
@@ -832,15 +1087,15 @@ MonoBehaviour:
       originalPath: 
       indexStatus: 0
       workTreeStatus: 3
-    changedFilesText: 3 changed files
+    changedFilesText: 5 changed files
     lastCurrentBranchChangedEvent:
-      updatedTimeString: 2022-12-17T00:12:17.611+07:00
+      updatedTimeString: 0001-01-01T00:00:00.000+00:00
       cacheType: 1
     lastStatusEntriesChangedEvent:
-      updatedTimeString: 2022-12-17T00:12:20.769+07:00
+      updatedTimeString: 0001-01-01T00:00:00.000+00:00
       cacheType: 6
     lastLocksChangedEvent:
-      updatedTimeString: 2022-12-16T09:28:02.045+07:00
+      updatedTimeString: 0001-01-01T00:00:00.000+00:00
       cacheType: 7
   historyView:
     currentLogHasUpdate: 0
@@ -960,7 +1215,7 @@ MonoBehaviour:
         gitFileStatus: 0
         lockedAt: 1 Jan 0001, 07:00
     lastCurrentRemoteChangedEvent:
-      updatedTimeString: 2022-12-15T08:22:26.576+07:00
+      updatedTimeString: 0001-01-01T00:00:00.000+00:00
       cacheType: 1
     lastLocksChangedEvent:
       updatedTimeString: 0001-01-01T00:00:00.000+00:00
@@ -996,13 +1251,13 @@ MonoBehaviour:
     m_Image: {fileID: 0}
     m_Tooltip: Url of the origin remote
   lastCurrentBranchAndRemoteChangedEvent:
-    updatedTimeString: 2022-12-17T00:12:17.611+07:00
+    updatedTimeString: 0001-01-01T00:00:00.000+00:00
     cacheType: 1
   lastTrackingStatusChangedEvent:
-    updatedTimeString: 2022-12-17T00:12:20.788+07:00
+    updatedTimeString: 0001-01-01T00:00:00.000+00:00
     cacheType: 5
   lastStatusEntriesChangedEvent:
-    updatedTimeString: 2022-12-17T00:12:20.769+07:00
+    updatedTimeString: 0001-01-01T00:00:00.000+00:00
     cacheType: 6
   pullButtonContent:
     m_Text: Pull
@@ -1020,7 +1275,7 @@ MonoBehaviour:
     m_Text: Fetch
     m_Image: {fileID: 0}
     m_Tooltip: 
-  repositoryProgressValue: 0.9995918
+  repositoryProgressValue: 0
   repositoryProgressMessage: 
   appManagerProgressValue: 1
   appManagerProgressMessage: 
@@ -1300,9 +1555,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 63.438732, y: 1.941399, z: 0.8958679}
+    m_Target: {x: 23.38648, y: 2.2393157, z: 2.4938724}
     speed: 2
-    m_Value: {x: 64.723175, y: 1.7665777, z: 0.8902208}
+    m_Value: {x: 23.38648, y: 2.2393157, z: 2.4938724}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1353,9 +1608,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 11.9843235
+    m_Target: 14.4003105
     speed: 2
-    m_Value: 12.549029
+    m_Value: 14.4003105
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1413,7 +1668,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 2afbffff
+      m_ExpandedIDs: 18e4ffff74e4ffff52e5fffface5ffff06e6ffff60e6ffffbae6ffff16e7ffff82edfffff4efffff7cf1ffffe8f1ffffa4f2ffff1af3ffff14f4ffff7af4ffffd4f4ffff42f5ffff2afbfffffe7400002093000002970000ae970000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1583,8 +1838,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d6710000
-    m_LastClickedID: 29142
+    m_SelectedIDs: 40720000
+    m_LastClickedID: 29248
     m_ExpandedIDs: 00000000c871000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1640,7 +1895,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000daab0000a2ae0000c05f00001ec0000062ad0000aef9000030760000826600006c670000586700001a620000026b00001e730000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1757,7 +2012,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_PreviewResizer:
-    m_CachedPref: 80
+    m_CachedPref: -50
     m_ControlHash: 1964396721
     m_PrefName: Preview_TilemapBrushInspector
   m_Palette: {fileID: 4192138403407905994, guid: 240904b800f6d0148af98e84dd2b27af, type: 3}
