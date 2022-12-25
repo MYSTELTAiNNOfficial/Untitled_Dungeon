@@ -19,8 +19,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
     public Action<Collider2D> action;
     public GameObject spell;
-    public int HP;
     public bool isCast = false;
+
+    public int HP;
+    public int atkPower;
+    public int magicPower;
 
     [SerializeField] private Transform aimCast;
     [SerializeField] private Transform startPoint;
@@ -159,5 +162,15 @@ public class PlayerController : MonoBehaviour
     public void heal()
     {
         HP++;
+    }
+
+    public int getAP()
+    {
+        return atkPower;
+    }
+
+    public int getMP()
+    {
+        return magicPower;
     }
 }
