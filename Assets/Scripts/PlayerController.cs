@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
     public Action<Collider2D> action;
     public GameObject spell;
     public int HP;
+    public bool isCast = false;
 
+    [SerializeField] private Transform aimCast;
     [SerializeField] private Transform startPoint;
     [SerializeField] private CameraController camera;
     [SerializeField] private Transform groundCheck;
@@ -81,13 +83,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Cast()
+    public void Cast_Animation()
     {
-        animator.SetTrigger("Cast1");
+        animator.SetTrigger("Cast");
+        isCast = true;
+    }
 
-        var newSpell = Instantiate(spell);
-        newSpell.transform.SetPositionAndRotation(this.transform.position, this.transform.rotation);
-        newSpell.GetComponent<ShootingItem>().Cast(this.transform.position, new Vector3(Mathf.Cos(Aim().x), Mathf.Sin(Aim().y), 0), AimAngle());
+    public void Cast_Attack()
+    {
+        var newSpell = Instantiate(spell, aimCast);
+        newSpell.transform.parent = null;
+        isCast = false;
+    }
+
+    public void Melee_Animation()
+    {
+        animator.SetTrigger("Attack");
+        isCast = true;
+    }
+
+    public void Melee_Attack()
+    {
+        
     }
 
     private void Flip()
@@ -127,22 +144,6 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         action.Invoke(collider);
-    }
-
-    public Vector3 Aim()
-    {
-        Vector3 mousePos = camera.gameObject.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-
-        Vector3 aimDirection = (mousePos - gameObject.transform.position).normalized;
-        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg + 35;
-
-        return aimDirection;
-    }
-
-    public float AimAngle()
-    {
-        float angle = Mathf.Atan2(Aim().y, Aim().x) * Mathf.Rad2Deg;
-        return angle;
     }
 
     public void hit()

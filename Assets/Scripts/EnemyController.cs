@@ -139,13 +139,6 @@ public class EnemyController : MonoBehaviour
 
     private void Attack()
     {
-        animator.SetTrigger("attack");
-
-        var newSpell = Instantiate(bullet);
-
-        Vector3 aimDirection = (target.transform.position - gameObject.transform.position).normalized;
-        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg + 35;
-        newSpell.transform.SetPositionAndRotation(this.transform.position, this.transform.rotation);
-        newSpell.GetComponent<ShootingBullet>().Cast(this.transform.position, new Vector3(Mathf.Cos(aimDirection.x), Mathf.Sin(aimDirection.y), 0), angle);
+       
     }
 }

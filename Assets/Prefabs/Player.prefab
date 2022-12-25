@@ -128,6 +128,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   spell: {fileID: 2597606651112440867, guid: 4699159afa12cf44d95716b0fac61635, type: 3}
   HP: 3
+  aimCast: {fileID: 1627073149672680047}
   startPoint: {fileID: 0}
   camera: {fileID: 0}
   groundCheck: {fileID: 6295952812817083061}
