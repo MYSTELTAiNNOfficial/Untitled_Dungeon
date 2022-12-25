@@ -5,16 +5,23 @@ using UnityEngine;
 public class ShootingItem : MonoBehaviour
 {
     public float speed;
+    public Animator animator;
+    private bool isHit = false;
 
-    Vector3 translate;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
-        transform.Translate(translate * speed * Time.deltaTime);
-
-        if (transform.position.y > 10)
+        if (isHit)
         {
-            Destroy(gameObject);
+            transform.Translate(transform.right * transform.localScale.x * 0);
+        }
+        else
+        {
+            transform.Translate(transform.right * transform.localScale.x * speed * Time.deltaTime);
         }
     }
 
@@ -24,20 +31,13 @@ public class ShootingItem : MonoBehaviour
         {
             return;
         }
-
-        Destroy(gameObject);
+        isHit= true;
+        transform.Translate(transform.right * transform.localScale.x * 0 );
+        animator.SetTrigger("Hit");
     }
 
-    public void Cast(Vector3 posAwal, Vector3 direction, float angle)
+    public void destroyItem()
     {
-        //taruh peluru di posisi awal
-        transform.localPosition = new Vector3(posAwal.x, posAwal.y, posAwal.z);
-        //transform.localPosition += translationVec * speed * 1000;
-
-        // set arah peluru
-        translate = new Vector3(direction.x, direction.y, direction.z);
-
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-
+        Destroy(gameObject);
     }
 }

@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public Canvas gameover;
     public Canvas selectlevel;
     private int score = 0;
+    private float delayOnAttack = 0;
+    private float castCooldown = 0;
+    private float meleeColldown = 0;
 
     private float move;
 
@@ -101,16 +104,47 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            playerController.Move(move);
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (delayOnAttack > 0)
             {
-                playerController.Jump(1);
+                playerController.Move(0);
+                delayOnAttack -= Time.deltaTime;
             }
-
-            if (Input.GetKeyDown(KeyCode.E))
+            else
             {
-                playerController.Cast();
+                playerController.Move(move);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    playerController.Jump(1);
+                }
+
+                if (castCooldown > 0)
+                {
+                    castCooldown-= Time.deltaTime;
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        playerController.Cast_Animation();
+                        delayOnAttack = 1;
+                        castCooldown = 3;
+                    }
+                }
+
+                if (meleeColldown > 0)
+                {
+                    meleeColldown -= Time.deltaTime;
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        playerController.Melee_Animation();
+                        delayOnAttack = 1;
+                        meleeColldown = 1.5F;
+                    }
+                }
             }
         }
 
