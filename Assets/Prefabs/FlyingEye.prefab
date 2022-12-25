@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6996088067867930841}
   - component: {fileID: 6996088067867930842}
   - component: {fileID: 6996088067867930846}
+  - component: {fileID: 3774686215608691106}
   - component: {fileID: 6996088067867930847}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FlyingEye
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6996088067867930853}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 6996088067867930853}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 799e7c5721ab55d4ea22f8d2b441e459, type: 2}
+  m_Controller: {fileID: 9100000, guid: 861b42be411c46d4885f7006e2f05e85, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,7 +121,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.22292757}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -131,8 +132,24 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.28125, y: 0.96875}
+  m_Size: {x: 1.28125, y: 0.39332962}
   m_EdgeRadius: 0
+--- !u!70 &3774686215608691106
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6996088067867930853}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.08028555, y: -0.075419664}
+  m_Size: {x: 0.58544254, y: 0.8384628}
+  m_Direction: 0
 --- !u!114 &6996088067867930847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +166,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   pointID: 0
-  target: {fileID: 0}
+  target: {fileID: 2398114748638371035, guid: d5daca86a4ddef94c90c674016b38862, type: 3}
   speed: 2
   hp: 2
   animator: {fileID: 0}

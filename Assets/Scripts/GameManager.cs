@@ -35,8 +35,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(cameraController.gameObject);
         DontDestroyOnLoad(eventSystem.gameObject);
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-        SceneManager.LoadScene("Stage" + index);
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode lsm)
