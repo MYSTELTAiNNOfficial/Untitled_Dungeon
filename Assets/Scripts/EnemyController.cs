@@ -1,9 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class EnemyController : MonoBehaviour
 {
     public List<Transform> points;
@@ -14,18 +13,31 @@ public class EnemyController : MonoBehaviour
     public Transform target;
     public float speed = 2f;
     public int hp;
-    private bool isProvoked = false;
-    private float delayTime = 2;
+    public bool isProvoked = false;
+    private float delayTime = 4;
     private float delay;
+    public int atkPower;
+    public bool isFacingRight;
+    public float timer = 0;
+    public float attackDistance;
+
+    System.Random rand = new System.Random();
+
+    [SerializeField] private Transform attackPoint;
+    public float attackRange;
 
     public Animator animator;
-    public GameObject bullet;
+
+    public LayerMask playerLayer;
+
+    public PlayerController playerController;
+    public GameManager gm;
 
     private void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
+        gm = FindObjectOfType<GameManager>();
         animator = GetComponent<Animator>();
-        
-        hp = PlayerPrefs.GetInt(gameObject.name, hp);
     }
 
     private void Reset()
@@ -34,9 +46,10 @@ public class EnemyController : MonoBehaviour
     }
     private void init()
     {
+        playerController = GetComponent<PlayerController>();
         points = new List<Transform>();
 
-        GetComponent<BoxCollider2D>().isTrigger = true;
+        GetComponent<CapsuleCollider2D>().isTrigger = true;
 
         GameObject root = new GameObject(name + "_Root");
 
@@ -58,24 +71,34 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (!isProvoked)
+        if (!isProvoked && timer < 0)
         {
             Move();
+            animator.SetBool("Run", true);
         }
         else
         {
             Provoked();
-
-            delay += Time.deltaTime;
-
-            if (delay > delayTime)
+            if (playerController.getHP() > 0)
             {
-                Attack();
-                delay = 0;
+                if (Vector3.Distance(playerController.transform.position, transform.position) > 7)
+                {
+                    timer -= Time.deltaTime;
+                    if (timer < 0)
+                    {
+                        isProvoked = false;
+                    }
+                }
+                else
+                {
+                    Follow();
+                }
+            }
+            if (playerController.getHP() == 0)
+            {
+                isProvoked = false;
             }
         }
-
-        PlayerPrefs.SetInt(gameObject.name, hp);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -87,14 +110,7 @@ public class EnemyController : MonoBehaviour
                 isProvoked = true;
             }
 
-            if (hp > 0)
-            {
-                hp--;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            hit(playerController.getMP());
         }
     }
 
@@ -117,11 +133,13 @@ public class EnemyController : MonoBehaviour
             if (pointID == points.Count - 1)
             {
                 idChangeValue = -1;
+                isFacingRight = false;
             }
 
             if (pointID == 0)
             {
                 idChangeValue = 1;
+                isFacingRight = true;
             }
 
             pointID += idChangeValue;
@@ -129,16 +147,106 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    private void Provoked()
+    private void Follow()
     {
-        Vector3 vectorToTarget = target.transform.position - transform.position;
-        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 20);
+
+        float distance2player = Vector2.Distance(transform.position, playerController.transform.position);
+        Vector2 target = new Vector2(playerController.transform.position.x, transform.position.y);
+
+        if (distance2player > attackDistance)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            animator.SetBool("Run", true);
+        }
+        else if (attackDistance >= distance2player)
+        {
+            animator.SetBool("Run", false);
+            delay += Time.deltaTime;
+
+            if (delay > delayTime)
+            {
+                Attack_Animation();
+                delay = 0;
+            }
+
+        }
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+    }
+
+    private void Provoked()
+
+    {
+        Vector3 localScale = transform.localScale;
+        if (playerController.transform.position.x > transform.position.x && !isFacingRight)
+        {
+            Flip();
+        }
+        if (playerController.transform.position.x < transform.position.x && isFacingRight)
+        {
+            Flip();
+        }
+    }
+
+    private void Attack_Animation()
+    {
+        animator.SetTrigger("Attack");
     }
 
     private void Attack()
     {
-       
+        Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
+
+        foreach (Collider2D player in hit)
+        {
+            Debug.Log("We hit " + player.name);
+            if (playerController != null)
+            {
+                playerController.hit(atkPower);
+            }
+        }
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+        {
+            return;
+        }
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    public void hit(int value)
+    {
+        int currentState = hp - value;
+        if (currentState > 0)
+        {
+            hp = currentState;
+            animator.SetTrigger("Hit");
+        }
+        else
+        {
+            animator.SetTrigger("Die");
+        }
+    }
+
+    public void Die()
+    {
+        int coin = rand.Next(1, 5);
+        int stash = coin + PlayerPrefs.GetInt("coin");
+        PlayerPrefs.SetInt("coin", stash);
+        gm.setNotif(gameObject.name+" has been killed! Recieving " + coin.ToString() + " coins!");
+        Destroy(gameObject);
+    }
+
+    public int getAP()
+    {
+        return atkPower;
     }
 }
