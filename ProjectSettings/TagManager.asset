@@ -11,6 +11,7 @@ TagManager:
   - Spell
   - Bullet
   - Potion
+  - Zonk
   layers:
   - Default
   - TransparentFX

@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public int atkPower;
     public int magicPower;
     public float attackRange = 0.5f;
+    private float tempBuffTimer;
+    private bool isBuffTemp = false;
 
     public GameObject spell;
     [SerializeField] private Transform aimCast;
@@ -57,7 +59,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isBuffTemp)
+        {
+            tempBuffTimer -= Time.deltaTime;
+            if (tempBuffTimer <= 0.0f)
+            {
+                PlayerPrefs.SetString("isAtkGetTemp", "false");
+                PlayerPrefs.SetString("isMagicGetTemp", "false");
+                checkBuff();
+                isBuffTemp= false;
+            }
+        }
         //Check if character on the ground
         isGround();
 
@@ -68,7 +80,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("xVelocity", Mathf.Abs(rb2d.velocity.x));
         animator.SetFloat("yVelocity", rb2d.velocity.y);
 
-        if (transform.position.y <= -9)
+        if (transform.position.y <= -8.5f)
         {
             HP = 0;
         }
@@ -187,17 +199,38 @@ public class PlayerController : MonoBehaviour
     public void StartSpawn()
     {
         string last = PlayerPrefs.GetString("checkpoint_stage", "");
-        string revive = PlayerPrefs.GetString("revivePremium", "false");
+        string revive = PlayerPrefs.GetString("revive", "false");
+        string revivePremium = PlayerPrefs.GetString("revivePremium", "false");
         string continued = PlayerPrefs.GetString("continue", "false");
-        if (last != "" && continued == "true" || revive == "true")
+        if (continued == "true" || revive == "true")
         {
-            Vector3 check = checkpointTarget.transform.position;
-            Vector3 pos = rb2d.transform.position;
-            pos.x = check.x;
-            pos.y = check.y;
-            rb2d.transform.position = pos;
-            PlayerPrefs.SetString("revivePremium", "false");
-            PlayerPrefs.SetString("continue", "false");
+            if (last != "")
+            {
+                if (revivePremium == "true")
+                {
+                    tempBuffTimer = 10f;
+                    PlayerPrefs.SetString("isAtkGetTemp", "true");
+                    PlayerPrefs.SetString("isMagicGetTemp", "true");
+                    checkBuff();
+                    isBuffTemp= true;
+                }
+                Vector3 check = checkpointTarget.transform.position;
+                Vector3 pos = rb2d.transform.position;
+                pos.x = check.x + 2;
+                pos.y = check.y;
+                rb2d.transform.position = pos;
+                PlayerPrefs.SetString("revivePremium", "false");
+                PlayerPrefs.SetString("revive", "false");
+                PlayerPrefs.SetString("continue", "false");
+            }
+            else
+            {
+                Vector3 start = startPoint.transform.position;
+                Vector3 pos = rb2d.transform.position;
+                pos.x = start.x;
+                pos.y = start.y;
+                rb2d.transform.position = pos;
+            }
         }
         else
         {
@@ -230,7 +263,7 @@ public class PlayerController : MonoBehaviour
 
     public void checkBuff()
     {
-        if (PlayerPrefs.GetString("isAtkBought") == "true")
+        if (PlayerPrefs.GetString("isAtkBought") == "true" || PlayerPrefs.GetString("isAtkGetTemp") == "true")
         {
             atkPower = 100;
         }
@@ -238,7 +271,7 @@ public class PlayerController : MonoBehaviour
         {
             atkPower = 25;
         }
-        if (PlayerPrefs.GetString("isMagicBought") == "true")
+        if (PlayerPrefs.GetString("isMagicBought") == "true" || PlayerPrefs.GetString("isMagicGetTemp") == "true")
         {
             magicPower = 100;
         }

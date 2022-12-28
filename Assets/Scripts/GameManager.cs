@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI tmpNotif;
     public TMPro.TextMeshProUGUI tmpNotifShop;
     public TMPro.TextMeshProUGUI tmpNotifSelectLevel;
+    public TMPro.TextMeshProUGUI tmpNotifGameover;
     public TMPro.TextMeshProUGUI castCdText;
     public TMPro.TextMeshProUGUI atkCdText;
     public TMPro.TextMeshProUGUI shopCoin;
@@ -110,11 +111,14 @@ public class GameManager : MonoBehaviour
                 if (SceneManager.GetActiveScene().name.ToString() == "Stage2")
                 {
                     PlayerPrefs.SetString("stage2unlock", "true");
+                    current_stage = "Stage2";
                 }
                 if (SceneManager.GetActiveScene().name.ToString() == "Stage3")
                 {
                     PlayerPrefs.SetString("stage3unlock", "true");
                 }
+                PlayerPrefs.SetString("checkpoint_stage", "");
+                lastcheck = "";
                 index++;
                 SceneManager.LoadScene("Stage" + index);
             }
@@ -124,6 +128,12 @@ public class GameManager : MonoBehaviour
                 coin += stash;
                 PlayerPrefs.SetInt("coin", coin);
                 notifString = "Collectible collected! Receiving " + stash + " coins!";
+                notifDelay = 3f;
+                Destroy(collider.gameObject);
+            }
+            else if (collider != null && collider.gameObject.tag == "Zonk")
+            {
+                notifString = "You got zonk collectible!";
                 notifDelay = 3f;
                 Destroy(collider.gameObject);
             }
@@ -195,6 +205,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            current_stage = SceneManager.GetActiveScene().name;
             gameovercanvas.gameObject.SetActive(false);
             move = Input.GetAxisRaw("Horizontal");
             if (delayOnAttack > 0)
@@ -223,18 +234,9 @@ public class GameManager : MonoBehaviour
                     playerController.Jump(1);
                 }
 
-                castCooldownTimer -= Time.deltaTime;
 
-                if (castCooldownTimer > 0.0f)
+                if (castCooldownTimer <= 0.0f)
                 {
-                    castCdText.gameObject.SetActive(true);
-                    castCdText.text = Mathf.RoundToInt(castCooldownTimer).ToString();
-                    castCdImage.fillAmount = castCooldownTimer / castCooldown;
-                }
-                else
-                {
-                    castCdText.gameObject.SetActive(false);
-                    castCdImage.fillAmount = 0.0f;
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         playerController.Cast_Animation();
@@ -243,18 +245,9 @@ public class GameManager : MonoBehaviour
                     }
                 }
 
-                meleeCooldownTimer -= Time.deltaTime;
 
-                if (meleeCooldownTimer > 0.0f)
+                if (meleeCooldownTimer <= 0.0f)
                 {
-                    atkCdText.gameObject.SetActive(true);
-                    atkCdText.text = Mathf.RoundToInt(meleeCooldownTimer).ToString();
-                    atkCdImage.fillAmount = meleeCooldownTimer / meleeCooldown;
-                }
-                else
-                {
-                    atkCdText.gameObject.SetActive(false);
-                    atkCdImage.fillAmount = 0.0f;
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         playerController.Melee_Animation();
@@ -264,6 +257,35 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        castCooldownTimer -= Time.deltaTime;
+
+        if (castCooldownTimer > 0.0f)
+        {
+            castCdText.gameObject.SetActive(true);
+            castCdText.text = Mathf.RoundToInt(castCooldownTimer).ToString();
+            castCdImage.fillAmount = castCooldownTimer / castCooldown;
+        }
+        else
+        {
+            castCdText.gameObject.SetActive(false);
+            castCdImage.fillAmount = 0.0f;
+        }
+
+        meleeCooldownTimer -= Time.deltaTime;
+
+        if (meleeCooldownTimer > 0.0f)
+        {
+            atkCdText.gameObject.SetActive(true);
+            atkCdText.text = Mathf.RoundToInt(meleeCooldownTimer).ToString();
+            atkCdImage.fillAmount = meleeCooldownTimer / meleeCooldown;
+        }
+        else
+        {
+            atkCdText.gameObject.SetActive(false);
+            atkCdImage.fillAmount = 0.0f;
+        }
+
         stage1unlock = PlayerPrefs.GetString("stage1unlock", "false");
         stage2unlock = PlayerPrefs.GetString("stage2unlock", "false");
         stage3unlock = PlayerPrefs.GetString("stage3unlock", "false");
@@ -273,6 +295,7 @@ public class GameManager : MonoBehaviour
         tmpHp.SetText("<sprite=0> " + playerController.getHP());
 
         checkBuff();
+        checkBuffTemp();
 
         if (notifDelay > 0)
         {
@@ -296,19 +319,30 @@ public class GameManager : MonoBehaviour
 
     public void Revive()
     {
+        PlayerPrefs.SetString("revivePremium", "false");
+        PlayerPrefs.SetString("revive", "true");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name.ToString());
+    }
+
+    public void Revive_Premium()
+    {
         int coin = PlayerPrefs.GetInt("coin", 0);
-        if (coin >= 10 && lastcheck != null)
+        if (coin >= 10 && lastcheck != "")
         {
             PlayerPrefs.SetString("revivePremium", "true");
+            PlayerPrefs.SetString("revive", "true");
             SceneManager.LoadScene(lastcheck);
             coin -= 10;
             PlayerPrefs.SetInt("coin", coin);
 
         }
-        else
+        else if (lastcheck == "")
         {
-            PlayerPrefs.SetString("revivePremium", "false");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name.ToString());
+            tmpNotifGameover.SetText("You need to reach checkpoint to use revive premium!");
+        }
+        else if (coin < 10)
+        {
+            tmpNotifGameover.SetText("Coin not enough to use revive premium!");
         }
     }
 
@@ -350,6 +384,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            PlayerPrefs.SetString("checkpoint_stage", "");
             PlayerPrefs.SetString("continue", "false");
             Time.timeScale = 1;
             mainMenucanvas.gameObject.SetActive(false);
@@ -423,10 +458,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            index = 1;
             PlayerPrefs.SetString("continue", "false");
+            PlayerPrefs.SetString("checkpoint_stage", "");
             selectlevelcanvas.gameObject.SetActive(false);
             SceneManager.LoadScene("Stage1");
             current_stage = "Stage1";
+            lastcheck = "";
         }
     }
 
@@ -438,10 +476,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            index = 2;
             PlayerPrefs.SetString("continue", "false");
+            PlayerPrefs.SetString("checkpoint_stage", "");
             selectlevelcanvas.gameObject.SetActive(false);
             SceneManager.LoadScene("Stage2");
             current_stage = "Stage2";
+            lastcheck = "";
         }
     }
 
@@ -454,6 +495,7 @@ public class GameManager : MonoBehaviour
         else
         {
             PlayerPrefs.SetString("continue", "false");
+            PlayerPrefs.SetString("checkpoint_stage", "");
             selectlevelcanvas.gameObject.SetActive(false);
             SceneManager.LoadScene("Stage3");
             current_stage = "Stage3";
@@ -575,6 +617,26 @@ public class GameManager : MonoBehaviour
         {
             shopHpPrice.SetText("100");
             buffHp.gameObject.SetActive(false);
+        }
+    }
+
+    public void checkBuffTemp()
+    {
+        if (PlayerPrefs.GetString("isAtkGetTemp") == "true")
+        {
+            buffAtk.gameObject.SetActive(true);
+        }
+        else
+        {
+            buffAtk.gameObject.SetActive(false);
+        }
+        if (PlayerPrefs.GetString("isMagicGetTemp") == "true")
+        {
+            buffMagic.gameObject.SetActive(true);
+        }
+        else
+        {
+            buffMagic.gameObject.SetActive(false);
         }
     }
 
