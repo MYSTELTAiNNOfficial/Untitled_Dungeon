@@ -18,18 +18,29 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     private Rigidbody2D rb2d;
     public Action<Collider2D> action;
-    public GameObject spell;
     public bool isCast = false;
 
     public int HP;
+    public int maxHp = 100;
     public int atkPower;
     public int magicPower;
+    public float attackRange = 0.5f;
+    private float tempBuffTimer;
+    private bool isBuffTemp = false;
 
+    public GameObject spell;
     [SerializeField] private Transform aimCast;
     [SerializeField] private Transform startPoint;
     [SerializeField] private CameraController camera;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform attackPoint;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask interactLayer;
+    [SerializeField] private EnemyController enemyController;
+    [SerializeField] private FlyingEnemyController flyingEnemyController;
+    [SerializeField] private GameManager gm;
+    [SerializeField] private Transform checkpointTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -37,16 +48,28 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         camera = FindObjectOfType<CameraController>();
+        gm = FindObjectOfType<GameManager>();
 
-        HP = PlayerPrefs.GetInt("hp", HP);
+        checkBuff();
 
         StartSpawn();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (isBuffTemp)
+        {
+            tempBuffTimer -= Time.deltaTime;
+            if (tempBuffTimer <= 0.0f)
+            {
+                PlayerPrefs.SetString("isAtkGetTemp", "false");
+                PlayerPrefs.SetString("isMagicGetTemp", "false");
+                checkBuff();
+                isBuffTemp= false;
+            }
+        }
         //Check if character on the ground
         isGround();
 
@@ -57,9 +80,13 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("xVelocity", Mathf.Abs(rb2d.velocity.x));
         animator.SetFloat("yVelocity", rb2d.velocity.y);
 
+        if (transform.position.y <= -8.5f)
+        {
+            HP = 0;
+        }
+
         //Auto save current positions
-        PlayerPrefs.SetFloat("playerPosX", rb2d.transform.position.x);
-        PlayerPrefs.SetFloat("playerPosY", rb2d.transform.position.y);
+
     }
 
     public void Move(float direction)
@@ -107,7 +134,38 @@ public class PlayerController : MonoBehaviour
 
     public void Melee_Attack()
     {
-        
+        Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider2D enemy in hit)
+        {
+            Debug.Log("We hit " + enemy.name);
+
+            flyingEnemyController = enemy.GetComponent<FlyingEnemyController>();
+            enemyController = enemy.GetComponent<EnemyController>();
+
+            if (flyingEnemyController != null)
+            {
+                flyingEnemyController.isProvoked = true;
+                flyingEnemyController.hit(atkPower);
+                flyingEnemyController.timer = 5;
+            }
+
+            if (enemyController != null)
+            {
+                enemyController.isProvoked = true;
+                enemyController.hit(atkPower);
+                enemyController.timer = 5;
+            }
+        }
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+        {
+            return;
+        }
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     private void Flip()
@@ -133,15 +191,55 @@ public class PlayerController : MonoBehaviour
 
         animator.SetBool("Jump", !isGrounded);
     }
+    public void Die()
+    {
+        animator.SetTrigger("Die");
+    }
 
     public void StartSpawn()
     {
-
-        Vector3 start = startPoint.transform.position;
-        Vector3 pos = rb2d.transform.position;
-        pos.x = PlayerPrefs.GetFloat("playerPosX", start.x);
-        pos.y = PlayerPrefs.GetFloat("playerPosY", start.y);
-        rb2d.transform.position = pos;
+        string last = PlayerPrefs.GetString("checkpoint_stage", "");
+        string revive = PlayerPrefs.GetString("revive", "false");
+        string revivePremium = PlayerPrefs.GetString("revivePremium", "false");
+        string continued = PlayerPrefs.GetString("continue", "false");
+        if (continued == "true" || revive == "true")
+        {
+            if (last != "")
+            {
+                if (revivePremium == "true")
+                {
+                    tempBuffTimer = 10f;
+                    PlayerPrefs.SetString("isAtkGetTemp", "true");
+                    PlayerPrefs.SetString("isMagicGetTemp", "true");
+                    checkBuff();
+                    isBuffTemp= true;
+                }
+                Vector3 check = checkpointTarget.transform.position;
+                Vector3 pos = rb2d.transform.position;
+                pos.x = check.x + 2;
+                pos.y = check.y;
+                rb2d.transform.position = pos;
+                PlayerPrefs.SetString("revivePremium", "false");
+                PlayerPrefs.SetString("revive", "false");
+                PlayerPrefs.SetString("continue", "false");
+            }
+            else
+            {
+                Vector3 start = startPoint.transform.position;
+                Vector3 pos = rb2d.transform.position;
+                pos.x = start.x;
+                pos.y = start.y;
+                rb2d.transform.position = pos;
+            }
+        }
+        else
+        {
+            Vector3 start = startPoint.transform.position;
+            Vector3 pos = rb2d.transform.position;
+            pos.x = start.x;
+            pos.y = start.y;
+            rb2d.transform.position = pos;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -149,19 +247,87 @@ public class PlayerController : MonoBehaviour
         action.Invoke(collider);
     }
 
-    public void hit()
+    public void hit(int value)
     {
-        HP--;
+        if (HP > 0)
+        {
+            HP -= value;
+            animator.SetTrigger("Hit");
+        }
+        if (HP < 0)
+        {
+            HP = 0;
+            Die();
+        }
+    }
+
+    public void checkBuff()
+    {
+        if (PlayerPrefs.GetString("isAtkBought") == "true" || PlayerPrefs.GetString("isAtkGetTemp") == "true")
+        {
+            atkPower = 100;
+        }
+        else
+        {
+            atkPower = 25;
+        }
+        if (PlayerPrefs.GetString("isMagicBought") == "true" || PlayerPrefs.GetString("isMagicGetTemp") == "true")
+        {
+            magicPower = 100;
+        }
+        else
+        {
+            magicPower = 25;
+        }
+        if (PlayerPrefs.GetString("isHpBought") == "true")
+        {
+            maxHp = 200;
+            int temp = PlayerPrefs.GetInt("hp", 0);
+            if (temp == 0)
+            {
+                HP = maxHp;
+            }
+            else
+            {
+                HP = temp;
+            }
+        }
+        else
+        {
+            maxHp = 100;
+            int temp = PlayerPrefs.GetInt("hp", 0);
+            if (temp == 0)
+            {
+                HP = maxHp;
+            }
+            else
+            {
+                HP = temp;
+            }
+
+        }
     }
 
     public int getHP()
     {
+        if (HP < 0)
+        {
+            HP = 0;
+        }
         return HP;
     }
 
-    public void heal()
+    public void heal(int value)
     {
-        HP++;
+        int temp = HP + value;
+        if (temp <= maxHp)
+        {
+            HP = temp;
+        }
+        else if (temp > maxHp)
+        {
+            HP = maxHp;
+        }
     }
 
     public int getAP()
@@ -172,5 +338,10 @@ public class PlayerController : MonoBehaviour
     public int getMP()
     {
         return magicPower;
+    }
+
+    public void DestroyOnDie()
+    {
+        Destroy(gameObject);
     }
 }

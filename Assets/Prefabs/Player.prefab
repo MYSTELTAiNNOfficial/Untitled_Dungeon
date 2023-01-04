@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5688697928721968421}
   - component: {fileID: 4925527612161814767}
   - component: {fileID: 163062676797158454}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -35,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 6295952812817083061}
   - {fileID: 1627073149672680047}
+  - {fileID: 7574990972127951966}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -864639515
+  m_SortingLayerID: 1244716931
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 523323a8ae888df44aa0770a674b2bb5, type: 3}
@@ -126,15 +127,25 @@ MonoBehaviour:
   moveSpeed: 5
   jumpPower: 17
   animator: {fileID: 0}
+  isCast: 0
+  HP: 100
+  atkPower: 25
+  magicPower: 25
+  attackRange: 0.94
   spell: {fileID: 2597606651112440867, guid: 4699159afa12cf44d95716b0fac61635, type: 3}
-  HP: 3
   aimCast: {fileID: 1627073149672680047}
   startPoint: {fileID: 0}
   camera: {fileID: 0}
   groundCheck: {fileID: 6295952812817083061}
+  attackPoint: {fileID: 7574990972127951966}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  enemyController: {fileID: 0}
+  flyingEnemyController: {fileID: 0}
 --- !u!95 &4925527612161814767
 Animator:
   serializedVersion: 4
@@ -180,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6295952812817083061}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground Checker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5933067920488579775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.051, y: -0.184, z: 0}
+  m_LocalPosition: {x: -0.051, y: -1.168, z: 0}
   m_LocalScale: {x: 6.5, y: 0.0076533775, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -211,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627073149672680047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,10 +237,41 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7136257228447158473}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.043, y: -0.047, z: 0.0073504187}
+  m_LocalPosition: {x: 1.12, y: -0.13, z: 0.0073504187}
   m_LocalScale: {x: 0.26493514, y: 0.26493514, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2398114748638371035}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7708529961914713823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7574990972127951966}
+  m_Layer: 6
+  m_Name: AttackRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7574990972127951966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708529961914713823}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.37, y: -0.21, z: -0.016355814}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2398114748638371035}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

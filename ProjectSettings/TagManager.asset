@@ -9,6 +9,9 @@ TagManager:
   - Collectible
   - Checkpoint
   - Spell
+  - Bullet
+  - Potion
+  - Zonk
   layers:
   - Default
   - TransparentFX
@@ -18,8 +21,8 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - 
-  - 
+  - Bullet
+  - Checkpoint
   - 
   - 
   - 
@@ -46,11 +49,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background2
-    uniqueID: 564824513
-    locked: 0
   - name: Background
     uniqueID: 2192801387
+    locked: 0
+  - name: Background2
+    uniqueID: 564824513
     locked: 0
   - name: Stage
     uniqueID: 3046616373
@@ -58,6 +61,9 @@ TagManager:
   - name: Foreground
     uniqueID: 3699772221
     locked: 0
-  - name: Player
-    uniqueID: 3430327781
+  - name: Checkpoint
+    uniqueID: 4187362779
+    locked: 0
+  - name: Basic
+    uniqueID: 1244716931
     locked: 0
