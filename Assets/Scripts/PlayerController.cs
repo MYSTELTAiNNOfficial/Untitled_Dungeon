@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask interactLayer;
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private FlyingEnemyController flyingEnemyController;
+    [SerializeField] private GolemController golemController;
     [SerializeField] private GameManager gm;
     [SerializeField] private Transform checkpointTarget;
 
@@ -155,6 +156,11 @@ public class PlayerController : MonoBehaviour
                 enemyController.isProvoked = true;
                 enemyController.hit(atkPower);
                 enemyController.timer = 5;
+            }
+
+            if (golemController != null)
+            {
+                golemController.hit(atkPower);
             }
         }
     }

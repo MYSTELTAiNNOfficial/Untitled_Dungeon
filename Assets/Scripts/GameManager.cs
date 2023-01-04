@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public CameraController cameraController;
     public EnemyController enemyController;
     public FlyingEnemyController flyingEnemyController;
+    public GolemController golemController;
     public EventSystem eventSystem;
 
     public TMPro.TextMeshProUGUI tmpScore;
@@ -150,6 +151,16 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Hit" + flyingEnemyController.getAP());
                 playerController.hit(flyingEnemyController.getAP());
+                if (playerController.getHP() <= 0)
+                {
+                    playerController.Die();
+                    isDie = true;
+                }
+            }
+            else if (collider != null && collider.gameObject.tag == "Laser")
+            {
+                Debug.Log("Hit" + golemController.getAP());
+                playerController.hit(golemController.getAP());
                 if (playerController.getHP() <= 0)
                 {
                     playerController.Die();
@@ -388,7 +399,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("continue", "false");
             Time.timeScale = 1;
             mainMenucanvas.gameObject.SetActive(false);
-            SceneManager.LoadScene("Stage1");
+            SceneManager.LoadScene("Stage3");
             current_stage = "Stage1";
             isDie = false;
             gameovercanvas.gameObject.SetActive(false);
