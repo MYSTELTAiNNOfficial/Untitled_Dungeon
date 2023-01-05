@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask interactLayer;
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private FlyingEnemyController flyingEnemyController;
+    [SerializeField] private GolemController golemController;
     [SerializeField] private GameManager gm;
+    [SerializeField] private AudioManager am;
     [SerializeField] private Transform checkpointTarget;
 
     // Start is called before the first frame update
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         camera = FindObjectOfType<CameraController>();
         gm = FindObjectOfType<GameManager>();
+        am = FindObjectOfType<AudioManager>();
 
         checkBuff();
 
@@ -99,6 +102,7 @@ public class PlayerController : MonoBehaviour
     public void Jump(float direction)
     {
         Vector3 velocity = rb2d.velocity;
+        am.PlayAudio("playerJump");
 
         if (isGrounded || doubleJump)
         {
@@ -116,6 +120,7 @@ public class PlayerController : MonoBehaviour
     public void Cast_Animation()
     {
         animator.SetTrigger("Cast");
+        am.PlayAudio("playerSpell");
         isCast = true;
     }
 
@@ -135,6 +140,7 @@ public class PlayerController : MonoBehaviour
     public void Melee_Attack()
     {
         Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        am.PlayAudio("playerMelee");
 
         foreach (Collider2D enemy in hit)
         {
@@ -142,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
             flyingEnemyController = enemy.GetComponent<FlyingEnemyController>();
             enemyController = enemy.GetComponent<EnemyController>();
+            golemController = enemy.GetComponent<GolemController>();
 
             if (flyingEnemyController != null)
             {
@@ -155,6 +162,11 @@ public class PlayerController : MonoBehaviour
                 enemyController.isProvoked = true;
                 enemyController.hit(atkPower);
                 enemyController.timer = 5;
+            }
+
+            if (golemController != null)
+            {
+                golemController.hit(atkPower);
             }
         }
     }
@@ -252,11 +264,13 @@ public class PlayerController : MonoBehaviour
         if (HP > 0)
         {
             HP -= value;
+            am.PlayAudio("playerHit");
             animator.SetTrigger("Hit");
         }
         if (HP < 0)
         {
             HP = 0;
+            am.PlayAudio("playerDie");
             Die();
         }
     }

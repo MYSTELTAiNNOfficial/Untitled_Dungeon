@@ -29,6 +29,7 @@ public class FlyingEnemyController : MonoBehaviour
 
     public PlayerController playerController;
     public GameManager gm;
+    public AudioManager audioManager;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class FlyingEnemyController : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
         animator = GetComponent<Animator>();
         rand = new System.Random();
+        audioManager = FindObjectOfType<AudioManager>();
 
     }
 
@@ -175,6 +177,7 @@ public class FlyingEnemyController : MonoBehaviour
     private void Attack_Animation()
     {
         animator.SetTrigger("Attack");
+        audioManager.PlayAudio("flyingAttack");
         isCast = true;
     }
 
@@ -192,10 +195,12 @@ public class FlyingEnemyController : MonoBehaviour
         {
             hp = currentState;
             animator.SetTrigger("Hit");
+            audioManager.PlayAudio("flyingHit");
         }
         else
         {
             animator.SetTrigger("Die");
+            audioManager.PlayAudio("flyingDie");
         }
     }
 
