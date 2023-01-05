@@ -32,12 +32,14 @@ public class EnemyController : MonoBehaviour
 
     public PlayerController playerController;
     public GameManager gm;
+    public AudioManager audioManager;
 
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
         gm = FindObjectOfType<GameManager>();
         animator = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void Reset()
@@ -197,6 +199,7 @@ public class EnemyController : MonoBehaviour
     private void Attack_Animation()
     {
         animator.SetTrigger("Attack");
+        audioManager.PlayAudio("enemyAttack");
     }
 
     private void Attack()
@@ -229,10 +232,12 @@ public class EnemyController : MonoBehaviour
         {
             hp = currentState;
             animator.SetTrigger("Hit");
+            audioManager.PlayAudio("enemyHit");
         }
         else
         {
             animator.SetTrigger("Die");
+            audioManager.PlayAudio("enemyDie");
         }
     }
 

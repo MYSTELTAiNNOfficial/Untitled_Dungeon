@@ -35,7 +35,7 @@ public class SlamShockwave : MonoBehaviour
         animator.SetTrigger("Hit");
     }
 
-    public void destroyItem()
+    public void destroyItem()   
     {
         Destroy(gameObject);
     }

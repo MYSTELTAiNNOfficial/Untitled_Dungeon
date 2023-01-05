@@ -14,10 +14,6 @@ public class GolemController : MonoBehaviour
     public float attackDelay = 3;
     private float cooldown = 3;
 
-    public bool flip;
-    public bool facingRight = false;
-    public bool isAttacking = false;
-
     public PlayerController playerController;
     private Rigidbody2D rb2d;
 
@@ -27,6 +23,7 @@ public class GolemController : MonoBehaviour
     [SerializeField] private Transform slamPoint;
 
     public Animator animator;
+    public AudioManager audioManager;
     System.Random rand = new System.Random();
 
     // Start is called before the first frame update
@@ -38,6 +35,7 @@ public class GolemController : MonoBehaviour
         animator = GetComponent<Animator>();
         playerController = FindObjectOfType<PlayerController>();
         rand = new System.Random();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -74,6 +72,7 @@ public class GolemController : MonoBehaviour
         {
             animator.SetTrigger("Laser");
             ShootLaser();
+            audioManager.PlayAudio("golemLaser");
             Debug.Log("Tembak laser");
         }else
         {
@@ -93,6 +92,16 @@ public class GolemController : MonoBehaviour
 
         var newSlam = Instantiate(shockwave, slamPoint);
         newSlam.transform.parent = null;
+    }
+
+    private void CallSlamAudio()
+    {
+        audioManager.PlayAudio("golemSlam");
+    }
+
+    private void CallShockWaveAudio()
+    {
+        audioManager.PlayAudio("golemShockwave");
     }
 
     public void hit(int value)
