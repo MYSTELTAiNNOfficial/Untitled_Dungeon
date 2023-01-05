@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     public CameraController cameraController;
     public EnemyController enemyController;
     public FlyingEnemyController flyingEnemyController;
+    public GolemController golemController;
     public EventSystem eventSystem;
+    public AudioManager audioManager;
 
     public TMPro.TextMeshProUGUI tmpScore;
     public TMPro.TextMeshProUGUI tmpHp;
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(cameraController.gameObject);
         DontDestroyOnLoad(eventSystem.gameObject);
+        DontDestroyOnLoad(audioManager.gameObject);
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
@@ -94,15 +97,18 @@ public class GameManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         enemyController = FindObjectOfType<EnemyController>();
         flyingEnemyController = FindObjectOfType<FlyingEnemyController>();
+        golemController = FindObjectOfType<GolemController>();
         playerController.action = Player_OnTriggerEnter2D;
         cameraController.target = playerController.transform;
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void Player_OnTriggerEnter2D(Collider2D collider)
     {
         if (isDie == false)
         {
-            if (collider != null && collider.gameObject.tag == "Finish")
+            Debug.Log(collider.gameObject.tag);
+            if (collider != null && collider.gameObject.tag == "Finish")               
             {
                 if (SceneManager.GetActiveScene().name.ToString() == "Stage1")
                 {
@@ -130,6 +136,7 @@ public class GameManager : MonoBehaviour
                 notifString = "Collectible collected! Receiving " + stash + " coins!";
                 notifDelay = 3f;
                 Destroy(collider.gameObject);
+                audioManager.PlayAudio("itemCoin");
             }
             else if (collider != null && collider.gameObject.tag == "Zonk")
             {
@@ -145,11 +152,22 @@ public class GameManager : MonoBehaviour
                 notifString = "Potion collected! Heal " + value + " health!";
                 notifDelay = 3f;
                 Destroy(collider.gameObject);
+                audioManager.PlayAudio("itemPotion");
             }
             else if (collider != null && collider.gameObject.tag == "Bullet")
             {
                 Debug.Log("Hit" + flyingEnemyController.getAP());
                 playerController.hit(flyingEnemyController.getAP());
+                if (playerController.getHP() <= 0)
+                {
+                    playerController.Die();
+                    isDie = true;
+                }
+            }
+            else if (collider != null && collider.gameObject.tag == "Laser")
+            {
+                Debug.Log("Hit" + golemController.getAP());
+                playerController.hit(golemController.getAP());
                 if (playerController.getHP() <= 0)
                 {
                     playerController.Die();
@@ -167,6 +185,7 @@ public class GameManager : MonoBehaviour
                     PlayerPrefs.SetString("checkpoint_stage", current_stage);
                     lastcheck = PlayerPrefs.GetString("checkpoint_stage", "");
                     PlayerPrefs.SetInt("hp", playerController.getHP());
+                    audioManager.PlayAudio("playerCheck");
                 }
                 else
                 {
@@ -208,6 +227,13 @@ public class GameManager : MonoBehaviour
             current_stage = SceneManager.GetActiveScene().name;
             gameovercanvas.gameObject.SetActive(false);
             move = Input.GetAxisRaw("Horizontal");
+            if (Input.GetAxisRaw("Horizontal") == 1f || Input.GetAxisRaw("Horizontal") == -1f)
+            {
+                if (!audioManager.audioSrc.isPlaying)
+                {
+                    audioManager.PlayAudio("playerWalk");
+                }
+            }
             if (delayOnAttack > 0)
             {
                 playerController.Move(0);
@@ -322,6 +348,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("revivePremium", "false");
         PlayerPrefs.SetString("revive", "true");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name.ToString());
+        audioManager.PlayAudio("playerRevive");
     }
 
     public void Revive_Premium()
@@ -334,6 +361,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(lastcheck);
             coin -= 10;
             PlayerPrefs.SetInt("coin", coin);
+            audioManager.PlayAudio("playerRevive");
 
         }
         else if (lastcheck == "")
@@ -505,6 +533,7 @@ public class GameManager : MonoBehaviour
     public void shopping()
     {
         fromMainMenu = true;
+        shopCoin.SetText("<sprite=157> " + PlayerPrefs.GetInt("coin", 0));
         shopcanvas.gameObject.SetActive(true);
     }
 
@@ -530,6 +559,7 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("coin", coin);
                 PlayerPrefs.SetString("isAtkBought", "true");
                 shopCoin.SetText("<sprite=157> " + coin);
+                audioManager.PlayAudio("shopBuy");
             }
         }
     }
@@ -556,6 +586,7 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("coin", coin);
                 PlayerPrefs.SetString("isMagicBought", "true");
                 shopCoin.SetText("<sprite=157> " + coin);
+                audioManager.PlayAudio("shopBuy");
             }
         }
     }
@@ -582,6 +613,7 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("coin", coin);
                 PlayerPrefs.SetString("isHpBought", "true");
                 shopCoin.SetText("<sprite=157> " + coin);
+                audioManager.PlayAudio("shopBuy");
             }
         }
     }

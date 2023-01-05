@@ -6,11 +6,13 @@ public class ShootingItem : MonoBehaviour
 {
     public float speed;
     public Animator animator;
+    public AudioManager audioManager;
     private bool isHit = false;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     void Update()
@@ -34,6 +36,7 @@ public class ShootingItem : MonoBehaviour
         isHit= true;
         transform.Translate(transform.right * transform.localScale.x * 0 );
         animator.SetTrigger("Hit");
+        audioManager.PlayAudio("spellExplode");
     }
 
     public void destroyItem()
