@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GolemController : MonoBehaviour
 {
+    public int maxHealth = 1500;
     public int health = 1500;
     public int currentHealth;
     public Slider healthBar;
@@ -31,6 +32,7 @@ public class GolemController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        healthBar.maxValue = maxHealth;
         currentHealth = health;
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -51,8 +53,7 @@ public class GolemController : MonoBehaviour
         }
 
         //healthbar
-        healthBar.value = currentHealth;
-        Debug.Log(currentHealth);
+        healthBar.value = health;
 
 
         attackDelay -= Time.deltaTime;
@@ -112,5 +113,13 @@ public class GolemController : MonoBehaviour
     public int getAP()
     {
         return atkPower;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider != null && collider.gameObject.tag == "Spell")
+        {
+            hit(playerController.getMP());
+        }
     }
 }

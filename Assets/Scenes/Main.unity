@@ -8298,6 +8298,7 @@ MonoBehaviour:
   cameraController: {fileID: 519420033}
   enemyController: {fileID: 0}
   flyingEnemyController: {fileID: 0}
+  golemController: {fileID: 0}
   eventSystem: {fileID: 699155968}
   tmpScore: {fileID: 1858465045}
   tmpHp: {fileID: 1925765182}

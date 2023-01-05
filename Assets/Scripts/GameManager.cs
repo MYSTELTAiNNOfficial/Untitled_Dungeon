@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         enemyController = FindObjectOfType<EnemyController>();
         flyingEnemyController = FindObjectOfType<FlyingEnemyController>();
+        golemController = FindObjectOfType<GolemController>();
         playerController.action = Player_OnTriggerEnter2D;
         cameraController.target = playerController.transform;
     }
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
     {
         if (isDie == false)
         {
+            Debug.Log(collider.gameObject.tag);
             if (collider != null && collider.gameObject.tag == "Finish")
             {
                 if (SceneManager.GetActiveScene().name.ToString() == "Stage1")
@@ -399,7 +401,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("continue", "false");
             Time.timeScale = 1;
             mainMenucanvas.gameObject.SetActive(false);
-            SceneManager.LoadScene("Stage3");
+            SceneManager.LoadScene("Stage1");
             current_stage = "Stage1";
             isDie = false;
             gameovercanvas.gameObject.SetActive(false);

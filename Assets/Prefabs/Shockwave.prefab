@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1696969794263876927}
   m_Layer: 8
   m_Name: ShockWaveHitBox
-  m_TagString: Bullet
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

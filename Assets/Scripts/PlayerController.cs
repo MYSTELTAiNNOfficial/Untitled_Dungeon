@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
 
             flyingEnemyController = enemy.GetComponent<FlyingEnemyController>();
             enemyController = enemy.GetComponent<EnemyController>();
+            golemController = enemy.GetComponent<GolemController>();
 
             if (flyingEnemyController != null)
             {
