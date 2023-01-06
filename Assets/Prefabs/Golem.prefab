@@ -132,20 +132,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d231a1a27a5c9a43b754eb9ef862e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1500
+  maxHealth: 500
+  health: 500
   currentHealth: 0
   healthBar: {fileID: 6048251718023802328, guid: c55c081681d14fb4b94742c92e599889, type: 3}
   atkPower: 50
   attackDelay: 3
-  flip: 0
-  facingRight: 0
-  isAttacking: 0
   playerController: {fileID: 5688697928721968421, guid: d5daca86a4ddef94c90c674016b38862, type: 3}
   laser: {fileID: 330180723519364640, guid: 30c961e369d6d5c4fb115efb50e1efa3, type: 3}
   firePoint: {fileID: 7194739564443815362}
   shockwave: {fileID: 1696969792993762666, guid: d514232e4dba3ea4683d3b60f9f09d7b, type: 3}
   slamPoint: {fileID: 8173460771048573473}
   animator: {fileID: 0}
+  audioManager: {fileID: 0}
+  gm: {fileID: 0}
 --- !u!95 &3887070957021726929
 Animator:
   serializedVersion: 4

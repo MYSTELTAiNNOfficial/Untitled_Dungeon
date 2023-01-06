@@ -48,7 +48,6 @@ public class EnemyController : MonoBehaviour
     }
     private void init()
     {
-        playerController = GetComponent<PlayerController>();
         points = new List<Transform>();
 
         GetComponent<CapsuleCollider2D>().isTrigger = true;
@@ -73,13 +72,15 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (!isProvoked && timer < 0)
+        
+        if (!isProvoked && timer < 0 && hp > 0)
         {
             Move();
             animator.SetBool("Run", true);
         }
-        else
+        else if (isProvoked || hp > 0)
         {
+            checkHP();
             Provoked();
             if (playerController.getHP() > 0)
             {
@@ -101,6 +102,10 @@ public class EnemyController : MonoBehaviour
                 isProvoked = false;
             }
         }
+        else
+        {
+            checkHP();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -113,6 +118,7 @@ public class EnemyController : MonoBehaviour
             }
 
             hit(playerController.getMP());
+            checkHP();
         }
     }
 
@@ -228,6 +234,7 @@ public class EnemyController : MonoBehaviour
     public void hit(int value)
     {
         int currentState = hp - value;
+        Debug.Log(currentState);
         if (currentState > 0)
         {
             hp = currentState;
@@ -235,6 +242,16 @@ public class EnemyController : MonoBehaviour
             audioManager.PlayAudio("enemyHit");
         }
         else
+        {
+            Debug.Log("masuk else");
+            animator.SetTrigger("Die");
+            audioManager.PlayAudio("enemyDie");
+        }
+    }
+
+    private void checkHP()
+    {
+        if (hp <= 0)
         {
             animator.SetTrigger("Die");
             audioManager.PlayAudio("enemyDie");

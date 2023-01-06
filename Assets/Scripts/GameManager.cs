@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         if (isDie == false)
         {
             Debug.Log(collider.gameObject.tag);
-            if (collider != null && collider.gameObject.tag == "Finish")               
+            if (collider != null && collider.gameObject.tag == "Finish")
             {
                 if (SceneManager.GetActiveScene().name.ToString() == "Stage1")
                 {
@@ -117,12 +117,11 @@ public class GameManager : MonoBehaviour
                 if (SceneManager.GetActiveScene().name.ToString() == "Stage2")
                 {
                     PlayerPrefs.SetString("stage2unlock", "true");
+                    PlayerPrefs.SetString("stage3unlock", "true");
                     current_stage = "Stage2";
                 }
-                if (SceneManager.GetActiveScene().name.ToString() == "Stage3")
-                {
-                    PlayerPrefs.SetString("stage3unlock", "true");
-                }
+
+                PlayerPrefs.SetInt("hp", playerController.getHP());
                 PlayerPrefs.SetString("checkpoint_stage", "");
                 lastcheck = "";
                 index++;
@@ -321,7 +320,12 @@ public class GameManager : MonoBehaviour
         tmpHp.SetText("<sprite=0> " + playerController.getHP());
 
         checkBuff();
-        checkBuffTemp();
+
+        if (PlayerPrefs.GetString("isAtkGetTemp") == "true" &&
+        PlayerPrefs.GetString("isMagicGetTemp") == "true")
+        {
+            checkBuffTemp();
+        }
 
         if (notifDelay > 0)
         {
@@ -486,6 +490,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+
+            PlayerPrefs.SetInt("hp", 0);
             index = 1;
             PlayerPrefs.SetString("continue", "false");
             PlayerPrefs.SetString("checkpoint_stage", "");
@@ -505,6 +511,8 @@ public class GameManager : MonoBehaviour
         else
         {
             index = 2;
+
+            PlayerPrefs.SetInt("hp", 0);
             PlayerPrefs.SetString("continue", "false");
             PlayerPrefs.SetString("checkpoint_stage", "");
             selectlevelcanvas.gameObject.SetActive(false);
@@ -522,8 +530,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+
+            PlayerPrefs.SetInt("hp", 0);
             PlayerPrefs.SetString("continue", "false");
             PlayerPrefs.SetString("checkpoint_stage", "");
+            lastcheck = "";
             selectlevelcanvas.gameObject.SetActive(false);
             SceneManager.LoadScene("Stage3");
             current_stage = "Stage3";

@@ -22,8 +22,12 @@ public class AudioManager : MonoBehaviour
     public PlayerController playerController;
     public GameManager gm;
 
-    [SerializeField] Slider volumeSlider;
-    [SerializeField] Slider bgmSlider;
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private Image sfxSpeaker;
+    [SerializeField] private Image bgmSpeaker;
+    public Sprite mute;
+    public Sprite on;
 
     // Start is called before the first frame update
     void Start()
@@ -83,12 +87,36 @@ public class AudioManager : MonoBehaviour
                 bgmSrc.Play();
             }
         }
+        else
+        {
+            if (bgmSrc.isPlaying)
+            {
+                bgmSrc.Stop();
+            }
+        }
     }
 
     public void ChangeVolume()
     {
         audioSrc.volume = volumeSlider.value;
         bgmSrc.volume = bgmSlider.value;
+        if (bgmSlider.value == 0)
+        {
+            bgmSpeaker.sprite = mute;
+        }
+        else
+        {
+            bgmSpeaker.sprite = on;
+        }
+
+        if (volumeSlider.value == 0)
+        {
+            sfxSpeaker.sprite = mute;
+        }
+        else
+        {
+            sfxSpeaker.sprite = on;
+        }
         Save();
     }
 

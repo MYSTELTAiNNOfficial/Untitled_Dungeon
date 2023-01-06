@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
         camera = FindObjectOfType<CameraController>();
         gm = FindObjectOfType<GameManager>();
         am = FindObjectOfType<AudioManager>();
+        tempBuffTimer = PlayerPrefs.GetFloat("tempBuffTimer", 0);
 
         checkBuff();
 
@@ -65,10 +66,13 @@ public class PlayerController : MonoBehaviour
         if (isBuffTemp)
         {
             tempBuffTimer -= Time.deltaTime;
+            PlayerPrefs.SetFloat("tempBuffTimer", tempBuffTimer);
+            Debug.Log(tempBuffTimer);
             if (tempBuffTimer <= 0.0f)
             {
                 PlayerPrefs.SetString("isAtkGetTemp", "false");
                 PlayerPrefs.SetString("isMagicGetTemp", "false");
+                PlayerPrefs.SetInt("hp", HP);
                 checkBuff();
                 isBuffTemp= false;
             }
@@ -86,10 +90,8 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y <= -8.5f)
         {
             HP = 0;
+            PlayerPrefs.SetInt("hp", 0);
         }
-
-        //Auto save current positions
-
     }
 
     public void Move(float direction)
@@ -205,6 +207,8 @@ public class PlayerController : MonoBehaviour
     }
     public void Die()
     {
+
+        PlayerPrefs.SetInt("hp", 0);
         animator.SetTrigger("Die");
     }
 
@@ -214,21 +218,33 @@ public class PlayerController : MonoBehaviour
         string revive = PlayerPrefs.GetString("revive", "false");
         string revivePremium = PlayerPrefs.GetString("revivePremium", "false");
         string continued = PlayerPrefs.GetString("continue", "false");
+
+        PlayerPrefs.SetInt("hp", maxHp);
         if (continued == "true" || revive == "true")
         {
             if (last != "")
             {
+                Debug.Log("Masuk Last");
                 if (revivePremium == "true")
                 {
+                    Debug.Log("Masuk Premium");
                     tempBuffTimer = 10f;
                     PlayerPrefs.SetString("isAtkGetTemp", "true");
                     PlayerPrefs.SetString("isMagicGetTemp", "true");
                     checkBuff();
                     isBuffTemp= true;
                 }
+                if (PlayerPrefs.GetFloat("tempBuffTimer", 0) > 0)
+                {
+                    isBuffTemp = true;
+                    checkBuff();
+                    PlayerPrefs.SetString("isAtkGetTemp", "true");
+                    PlayerPrefs.SetString("isMagicGetTemp", "true");
+                    tempBuffTimer = PlayerPrefs.GetFloat("tempBuffTimer", 0);
+                }
                 Vector3 check = checkpointTarget.transform.position;
                 Vector3 pos = rb2d.transform.position;
-                pos.x = check.x + 2;
+                pos.x = check.x;
                 pos.y = check.y;
                 rb2d.transform.position = pos;
                 PlayerPrefs.SetString("revivePremium", "false");
@@ -237,6 +253,15 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                Debug.Log("Masuk Start");
+                if (PlayerPrefs.GetFloat("tempBuffTimer", 0) > 0)
+                {
+                    isBuffTemp= true;
+                    checkBuff();
+                    PlayerPrefs.SetString("isAtkGetTemp", "true");
+                    PlayerPrefs.SetString("isMagicGetTemp", "true");
+                    tempBuffTimer = PlayerPrefs.GetFloat("tempBuffTimer", 0);
+                }
                 Vector3 start = startPoint.transform.position;
                 Vector3 pos = rb2d.transform.position;
                 pos.x = start.x;
@@ -246,6 +271,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if (PlayerPrefs.GetFloat("tempBuffTimer", 0) > 0)
+            {
+                isBuffTemp = true;
+                checkBuff();
+                PlayerPrefs.SetString("isAtkGetTemp", "true");
+                PlayerPrefs.SetString("isMagicGetTemp", "true");
+                tempBuffTimer = PlayerPrefs.GetFloat("tempBuffTimer", 0);
+            }
             Vector3 start = startPoint.transform.position;
             Vector3 pos = rb2d.transform.position;
             pos.x = start.x;

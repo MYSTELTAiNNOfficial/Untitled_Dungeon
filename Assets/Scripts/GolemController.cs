@@ -16,6 +16,7 @@ public class GolemController : MonoBehaviour
 
     public PlayerController playerController;
     private Rigidbody2D rb2d;
+    private bool isDie = false;
 
     public GameObject laser;
     [SerializeField] private Transform firePoint;
@@ -25,6 +26,7 @@ public class GolemController : MonoBehaviour
     public Animator animator;
     public AudioManager audioManager;
     System.Random rand = new System.Random();
+    public GameManager gm;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,7 @@ public class GolemController : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         rand = new System.Random();
         audioManager = FindObjectOfType<AudioManager>();
+        gm = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -54,12 +57,15 @@ public class GolemController : MonoBehaviour
         healthBar.value = health;
 
 
-        attackDelay -= Time.deltaTime;
-        if(attackDelay <= 0f)
+        if (!isDie)
         {
-            Debug.Log("If Masuk");
-            attackDelay = cooldown;
-            Attack();
+            attackDelay -= Time.deltaTime;
+            if (attackDelay <= 0f)
+            {
+                Debug.Log("If Masuk");
+                attackDelay = cooldown;
+                Attack();
+            }
         }
     }
 
@@ -116,12 +122,22 @@ public class GolemController : MonoBehaviour
         else
         {
             animator.SetTrigger("Die");
+            isDie = true;
         }
     }
 
     public int getAP()
     {
         return atkPower;
+    }
+
+    private void Die()
+    {
+        int coin = rand.Next(20, 50);
+        int stash = coin + PlayerPrefs.GetInt("coin");
+        PlayerPrefs.SetInt("coin", stash);
+        gm.setNotif(gameObject.name + " has been killed! Recieving " + coin.ToString() + " coins!");
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
