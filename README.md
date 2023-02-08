@@ -6,6 +6,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/github/issues/MYSTELTAiNNOfficial/Untitled_Dungeon)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MYSTELTAiNNOfficial/Untitled_Dungeon)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/pulls)
+[![GitHub Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/MYSTELTAiNNOfficial/Untitled_Dungeon)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
@@ -22,7 +23,6 @@
 - [Getting Started](#getting_started)
 - [Built Using](#built_using)
 - [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
 
 # 🧐 About <a name = "about"></a>
  Game 2D Platformer created by **@MYSTELTAiNNOfficial** & **@kroci126** for the final project of the course **"Game Development"** at the Ciputra University 2022.
