@@ -4,8 +4,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/MYSTELTAiNNOfficial/Untitled_Dungeon.svg)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MYSTELTAiNNOfficial/Untitled_Dungeon.svg)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/MYSTELTAiNNOfficial/Untitled_Dungeon)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MYSTELTAiNNOfficial/Untitled_Dungeon)](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
