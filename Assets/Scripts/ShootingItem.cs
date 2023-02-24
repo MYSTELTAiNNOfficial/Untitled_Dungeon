@@ -29,7 +29,7 @@ public class ShootingItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Bullet" || collider.gameObject.tag == "Laser")
         {
             return;
         }

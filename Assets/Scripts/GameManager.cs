@@ -260,7 +260,7 @@ public class GameManager : MonoBehaviour
                 }
 
 
-                if (castCooldownTimer <= 0.0f)
+                if (castCooldownTimer <= 0.0f && playerController.animator.GetBool("Jump") == false)
                 {
                     if (Input.GetKeyDown(KeyCode.E))
                     {
@@ -271,7 +271,7 @@ public class GameManager : MonoBehaviour
                 }
 
 
-                if (meleeCooldownTimer <= 0.0f)
+                if (meleeCooldownTimer <= 0.0f && playerController.animator.GetBool("Jump") == false)
                 {
                     if (Input.GetKeyDown(KeyCode.F))
                     {
