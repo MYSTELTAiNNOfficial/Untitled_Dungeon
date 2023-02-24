@@ -56,7 +56,7 @@ MVS Community 2022
 
 See also the list of [contributors](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/contributors) who participated in this project.
 
-# 📞 Contact Us <a name = "contact_us"></a>
+# 📞 Contact Us <a name = "contact-us"></a>
 ## Discord
 - MYSTELTAiNN#9783 (@MYSTELTAiNNOfficial)
 - Neo#4544 (@kroci126)
