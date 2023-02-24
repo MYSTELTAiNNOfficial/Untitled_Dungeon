@@ -27,14 +27,15 @@
 # 🧐 About <a name = "about"></a>
  Game 2D Platformer created by **@MYSTELTAiNNOfficial** & **@kroci126** for the final project of the course **"Game Development"** at the Ciputra University 2022.
 
+ ### **Announcement:**
+ The development itself still running, but the game is already playable. The game is still in development, so there are still many bugs and errors. We will fix it as soon as possible. If you find a bug, please report it to us by open new issue or you can see at [Contact Us](#contact-us) to direct report. Thank you for your support.
+
 ### **Game Description**
 You, Player, has stranded on the new, unexplored dungeon. Many monsters are waiting for you. You must find the way out of the dungeon. But be careful, the monsters are everywhere. You must be careful and find the way out of the dungeon. While find a way out, you can collect the coins to buy the a buff at Shop that will help you.
 
 # 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
-
-### Prerequisites
+## Prerequisites
 
 What things you need to install the software and how to install them.
 
@@ -54,3 +55,9 @@ MVS Community 2022
 - [@kroci126](https://github.com/kroci126) - Design, Development
 
 See also the list of [contributors](https://github.com/MYSTELTAiNNOfficial/Untitled_Dungeon/contributors) who participated in this project.
+
+# 📞 Contact Us <a name = "contact_us"></a>
+## Discord
+- MYSTELTAiNN#9783 (@MYSTELTAiNNOfficial)
+- Neo#4544 (@kroci126)
+
