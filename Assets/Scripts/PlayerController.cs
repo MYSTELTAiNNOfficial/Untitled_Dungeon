@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isBuffTemp)
         {
-            tempBuffTimer -= Time.deltaTime;
+            tempBuffTimer -= Time.unscaledDeltaTime;
             PlayerPrefs.SetFloat("tempBuffTimer", tempBuffTimer);
             Debug.Log(tempBuffTimer);
             if (tempBuffTimer <= 0.0f)

@@ -150,7 +150,9 @@ MonoBehaviour:
     m_Bits: 0
   enemyController: {fileID: 0}
   flyingEnemyController: {fileID: 0}
+  golemController: {fileID: 0}
   gm: {fileID: 0}
+  am: {fileID: 0}
   checkpointTarget: {fileID: 0}
 --- !u!95 &4925527612161814767
 Animator:
@@ -164,7 +166,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 951810485e1772e42be768907d0552f1, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0

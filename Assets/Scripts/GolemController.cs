@@ -59,7 +59,7 @@ public class GolemController : MonoBehaviour
 
         if (!isDie)
         {
-            attackDelay -= Time.deltaTime;
+            attackDelay -= Time.unscaledDeltaTime;
             if (attackDelay <= 0f)
             {
                 Debug.Log("If Masuk");

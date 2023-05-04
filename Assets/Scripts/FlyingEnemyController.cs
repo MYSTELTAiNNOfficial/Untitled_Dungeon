@@ -82,14 +82,14 @@ public class FlyingEnemyController : MonoBehaviour
             {
                 if (Vector3.Distance(playerController.transform.position, transform.position) > 10)
                 {
-                    timer -= Time.deltaTime;
+                    timer -= Time.unscaledDeltaTime;
                     if (timer < 0)
                     {
                         isProvoked = false;
                     }
                 } else
                 {
-                    delay += Time.deltaTime;
+                    delay += Time.unscaledDeltaTime;
 
                     if (delay > delayTime)
                     {
@@ -132,7 +132,7 @@ public class FlyingEnemyController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed * Time.unscaledDeltaTime);
 
         if (Vector2.Distance(transform.position, goalPoint.position) < 0.1f)
         {

@@ -20,13 +20,13 @@ public class ShootingBullet : MonoBehaviour
         }
         else
         {
-            transform.Translate(transform.right * transform.localScale.x * speed * Time.deltaTime);
+            transform.Translate(transform.right * transform.localScale.x * speed * Time.unscaledDeltaTime);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "Enemy")
+        if (collider.gameObject.tag == "Enemy" || collider.gameObject.tag == "Spell")
         {
             return;
         }

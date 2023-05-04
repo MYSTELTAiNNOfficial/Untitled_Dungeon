@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (Vector3.Distance(playerController.transform.position, transform.position) > 7)
                 {
-                    timer -= Time.deltaTime;
+                    timer -= Time.unscaledDeltaTime;
                     if (timer < 0)
                     {
                         isProvoked = false;
@@ -134,7 +134,7 @@ public class EnemyController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed * Time.unscaledDeltaTime);
 
         if (Vector2.Distance(transform.position, goalPoint.position) < 0.1f)
         {
@@ -163,13 +163,13 @@ public class EnemyController : MonoBehaviour
 
         if (distance2player > attackDistance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.unscaledDeltaTime);
             animator.SetBool("Run", true);
         }
         else if (attackDistance >= distance2player)
         {
             animator.SetBool("Run", false);
-            delay += Time.deltaTime;
+            delay += Time.unscaledDeltaTime;
 
             if (delay > delayTime)
             {

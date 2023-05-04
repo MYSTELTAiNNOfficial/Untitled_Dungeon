@@ -23,13 +23,13 @@ public class ShootingItem : MonoBehaviour
         }
         else
         {
-            transform.Translate(transform.right * transform.localScale.x * speed * Time.deltaTime);
+            transform.Translate(transform.right * transform.localScale.x * speed * Time.unscaledDeltaTime);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Bullet" || collider.gameObject.tag == "Laser")
         {
             return;
         }
