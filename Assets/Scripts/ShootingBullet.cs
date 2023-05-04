@@ -20,7 +20,7 @@ public class ShootingBullet : MonoBehaviour
         }
         else
         {
-            transform.Translate(transform.right * transform.localScale.x * speed * Time.deltaTime);
+            transform.Translate(transform.right * transform.localScale.x * speed * Time.unscaledDeltaTime);
         }
     }
 

@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -6158,8 +6158,8 @@ TextureImporter:
       '#2 - Transparent Icons & Drop Shadow_192': -1719174903
       '#2 - Transparent Icons & Drop Shadow_215': -956151638
       '#2 - Transparent Icons & Drop Shadow_29': -1032929009
-      '#2 - Transparent Icons & Drop Shadow_145': 484051077
       '#2 - Transparent Icons & Drop Shadow_155': 421930711
+      '#2 - Transparent Icons & Drop Shadow_145': 484051077
       '#2 - Transparent Icons & Drop Shadow_14': 1135414498
       '#2 - Transparent Icons & Drop Shadow_71': -1523076862
       '#2 - Transparent Icons & Drop Shadow_170': -1151664048
@@ -6227,11 +6227,11 @@ TextureImporter:
       '#2 - Transparent Icons & Drop Shadow_17': 1428522507
       '#2 - Transparent Icons & Drop Shadow_38': 1038066538
       '#2 - Transparent Icons & Drop Shadow_25': 367852177
-      '#2 - Transparent Icons & Drop Shadow_229': 1184528348
       '#2 - Transparent Icons & Drop Shadow_268': 2045049493
       '#2 - Transparent Icons & Drop Shadow_53': 377289063
       '#2 - Transparent Icons & Drop Shadow_69': 318352963
       '#2 - Transparent Icons & Drop Shadow_131': 142823651
+      '#2 - Transparent Icons & Drop Shadow_229': 1184528348
       '#2 - Transparent Icons & Drop Shadow_278': -1651861784
       '#2 - Transparent Icons & Drop Shadow_130': -73529463
       '#2 - Transparent Icons & Drop Shadow_80': -345074412

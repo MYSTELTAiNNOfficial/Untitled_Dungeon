@@ -62,11 +62,11 @@ public class GameManager : MonoBehaviour
 
     private bool fromMainMenu = false;
     private bool fromPause = false;
+    private bool paused = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1;
         coin = PlayerPrefs.GetInt("coin", 0);
         lastcheck = PlayerPrefs.GetString("checkpoint_stage", "");
         stage1unlock = PlayerPrefs.GetString("stage1unlock", "false");
@@ -207,7 +207,6 @@ public class GameManager : MonoBehaviour
             isDie = false;
             gameovercanvas.gameObject.SetActive(false);
         }
-        Time.timeScale = 1;
         if (tutorial.active || PlayerPrefs.GetString("tutorial_done") != "true")
         {
             if (Input.anyKey || PlayerPrefs.GetString("tutorial_done") == "true")
@@ -236,7 +235,7 @@ public class GameManager : MonoBehaviour
             if (delayOnAttack > 0)
             {
                 playerController.Move(0);
-                delayOnAttack -= Time.deltaTime;
+                delayOnAttack -= Time.unscaledDeltaTime;
             }
             else
             {
@@ -283,7 +282,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        castCooldownTimer -= Time.deltaTime;
+        castCooldownTimer -= Time.unscaledDeltaTime;
 
         if (castCooldownTimer > 0.0f)
         {
@@ -297,7 +296,7 @@ public class GameManager : MonoBehaviour
             castCdImage.fillAmount = 0.0f;
         }
 
-        meleeCooldownTimer -= Time.deltaTime;
+        meleeCooldownTimer -= Time.unscaledDeltaTime;
 
         if (meleeCooldownTimer > 0.0f)
         {
@@ -329,7 +328,7 @@ public class GameManager : MonoBehaviour
 
         if (notifDelay > 0)
         {
-            notifDelay -= Time.deltaTime;
+            notifDelay -= Time.unscaledDeltaTime;
         }
         else
         {
@@ -449,11 +448,13 @@ public class GameManager : MonoBehaviour
     public void pause()
     {
         Time.timeScale = 0;
+        paused = true;
         pausecanvas.gameObject.SetActive(true);
     }
     public void Continue()
     {
         Time.timeScale = 1;
+        paused = false;
         pausecanvas.gameObject.SetActive(false);
     }
 
