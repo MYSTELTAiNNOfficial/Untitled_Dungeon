@@ -27,8 +27,12 @@
 # 🧐 About <a name = "about"></a>
  Game 2D Platformer created by **@MYSTELTAiNNOfficial** & **@kroci126** for the final project of the course **"Game Development"** at the Ciputra University 2022.
 
- ### **Announcement:**
- The development itself still running, but the game is already playable. The game is still in development, so there are still many bugs and errors. We will fix it as soon as possible. If you find a bug, please report it to us by open new issue or you can see at [Contact Us](#contact-us) to direct report. Thank you for your support.
+ ### **Announcement (14/10/2024):**
+After v1.0.0-beta.1, the game will be released as closed source and will be released in to my itch.io page. The current source code still be available to everyone but i'll archive this repo soon.
+
+The difference is the codes and the assets. In v1.0.0-beta.1, the assets i use in the game is from itch.io, and the codes are didn't good enough. So, my plan is using the assets that i create (still on progress, tho i don't know when it will be done) and doing remake the code from scratch.
+
+The game will look different, but i will make it mostly same as the initial release (i'm not promise anything tho)!
 
 ### **Game Description**
 You, Player, has stranded on the new, unexplored dungeon. Many monsters are waiting for you. You must find the way out of the dungeon. But be careful, the monsters are everywhere. You must be careful and find the way out of the dungeon. While find a way out, you can collect the coins to buy the a buff at Shop that will help you.
@@ -58,6 +62,6 @@ See also the list of [contributors](https://github.com/MYSTELTAiNNOfficial/Untit
 
 # 📞 Contact Us <a name = "contact-us"></a>
 ## Discord
-- MYSTELTAiNN#9783 (@MYSTELTAiNNOfficial)
+- mysteltainn_id (@MYSTELTAiNNOfficial)
 - Neo#4544 (@kroci126)
 
